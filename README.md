@@ -11,7 +11,7 @@ This script
 You'll need node and npm to run this script
 
 ```
-git clone https://github.com/acunniffe/compass-gitlab
+git clone https://github.com/gtchuinkam/compass-github-importer
 cd compass-gihub-importer
 npm install
 ```
@@ -19,8 +19,8 @@ npm install
 ## Credentials
 Create a `.env` file and fill in the blanks. This file should be ignored by git already since it is in the `.gitignore`
 ```
-# Replace these with your GitLab instance URL and access token
-GITHUB_URL='<your gitlab>'
+# Replace these with your GitHub instance URL and access token
+GITHUB_URL='<your github>'
 ACCESS_TOKEN='<an access token for GitHub>'
 USER_EMAIL='<atlassian email>'
 # https://id.atlassian.com/manage-profile/security/api-tokens
@@ -48,22 +48,19 @@ New component for https://github.com/cloud-group3072118/timely ... would be adde
 ```
 
 
-By default, all repos will be added. If you see some repos you don't want to import during the dry-run? Modify `index.js` to add some filters. There is a lot of metadata in the `project` variable. Read the API docs here: https://docs.gitlab.com/ee/api/projects.html
+By default, all repos will be added. If you see some repos you don't want to import during the dry-run? Modify `index.js` to add some filters.
 
 ```javascript
-for (const project of projects) {
-
+for (const repo of repos) {
     // need a filter, add one here!
     /*
-    Example, skip user's 'home' repos
-    if (project.path !== 'home')
+    Example, skip is repo name is "hello-world"
+    if (repo.name !== 'hello-world')
      */
     if (true) {
-        await putComponent(project.path_with_namespace, project.web_url, project.readme_url)
+        await putComponent(repo.name, repo.description || '', repo.html_url)
     }
-
 }
-
 ```
 
 ## Ready to import?
